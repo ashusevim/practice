@@ -13,8 +13,15 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
+    // we can guarantee that the email is not empty
+    public boolean validateEmail(String email) {
+        // regex pattern
+        // [a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$
+        return email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
     public User createUser(User user) {
-        if (user != null) {
+        if (user != null && validateEmail(user.getEmail())) {
             return userRepository.save(user);
         }
         return null;
